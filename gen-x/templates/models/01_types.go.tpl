@@ -37,8 +37,11 @@ type {{$tAlias.UpSingular}}Slice []*{{$tAlias.UpSingular}}
 {{$table := .Table}}
 {{$tAlias := .Aliases.Table $table.Key -}}
 {{if not $table.Constraints.Primary -}}
+    // {{$tAlias.UpSingular}}Table is table definition for the {{$table.Name}} table
+    type {{$tAlias.UpSingular}}Table = {{$.Dialect}}.Table[*{{$tAlias.UpSingular}}, {{$tAlias.UpSingular}}Slice]
+
 	// {{$tAlias.UpPlural}} contains methods to work with the {{$table.Name}} view
-	var {{$tAlias.UpPlural}} = {{$.Dialect}}.NewViewx[*{{$tAlias.UpSingular}}, {{$tAlias.UpSingular}}Slice]("{{$table.Schema}}","{{$table.Name}}")
+	var {{$tAlias.UpPlural}} *{{$tAlias.UpSingular}}Table = {{$.Dialect}}.NewViewx[*{{$tAlias.UpSingular}}, {{$tAlias.UpSingular}}Slice]("{{$table.Schema}}","{{$table.Name}}")
 	// {{$tAlias.UpPlural}}Query is a query on the {{$table.Name}} view
 	type {{$tAlias.UpPlural}}Query = *{{$.Dialect}}.ViewQuery[*{{$tAlias.UpSingular}}, {{$tAlias.UpSingular}}Slice]
 {{- else -}}

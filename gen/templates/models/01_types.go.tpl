@@ -42,8 +42,10 @@ type {{$tAlias.UpSingular}}Slice []*{{$tAlias.UpSingular}}
 	// {{$tAlias.UpPlural}}Query is a query on the {{$table.Name}} view
 	type {{$tAlias.UpPlural}}Query = *{{$.Dialect}}.ViewQuery[*{{$tAlias.UpSingular}}, {{$tAlias.UpSingular}}Slice]
 {{- else -}}
+    // {{$tAlias.UpSingular}}Table is table definition for the {{$table.Name}} table
+    type {{$tAlias.UpSingular}}Table = {{$.Dialect}}.Table[*{{$tAlias.UpSingular}}, {{$tAlias.UpSingular}}Slice, *{{$tAlias.UpSingular}}Setter]
 	// {{$tAlias.UpPlural}} contains methods to work with the {{$table.Name}} table
-	var {{$tAlias.UpPlural}} = {{$.Dialect}}.NewTablex[*{{$tAlias.UpSingular}}, {{$tAlias.UpSingular}}Slice, *{{$tAlias.UpSingular}}Setter]("{{$table.Schema}}","{{$table.Name}}")
+	var {{$tAlias.UpPlural}} *{{$tAlias.UpSingular}}Table = {{$.Dialect}}.NewTablex[*{{$tAlias.UpSingular}}, {{$tAlias.UpSingular}}Slice, *{{$tAlias.UpSingular}}Setter]("{{$table.Schema}}","{{$table.Name}}")
 	// {{$tAlias.UpPlural}}Query is a query on the {{$table.Name}} table
 	type {{$tAlias.UpPlural}}Query = *{{$.Dialect}}.ViewQuery[*{{$tAlias.UpSingular}}, {{$tAlias.UpSingular}}Slice]
 {{- end}}
